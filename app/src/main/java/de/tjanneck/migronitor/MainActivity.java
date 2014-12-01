@@ -32,8 +32,6 @@ public class MainActivity extends ActionBarActivity {
     private SharedPreferences prefs;
     private MigronitorDataSource migronitorDatasource;
     private SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-    private PendingIntent pendingIntent;
-    private AlarmManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +65,7 @@ public class MainActivity extends ActionBarActivity {
             Date vgl = new Date();
             vgl = new Date(vgl.getTime() - 13 * 60 * 60 * 1000);
 
-            if (vgl.after(d)) {
-                return false;
-            } else {
-                return true;
-            }
+            return !vgl.after(d);
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
@@ -229,14 +223,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClickSchlafen(View v) {
-        Button b = (Button) v;
 
-        if (!schlafen) {
-            this.schlafen = true;
-        } else {
-            this.schlafen = false;
-
-        }
+        this.schlafen = !schlafen;
         prefs.edit().putBoolean("schlafen", schlafen).apply();
         drawButton("schlafen");
 

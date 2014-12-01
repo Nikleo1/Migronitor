@@ -22,7 +22,7 @@ import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
 public class DbRotator extends IntentService {
 
 
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
 
     public DbRotator() {
@@ -67,10 +67,11 @@ public class DbRotator extends IntentService {
                 mds.open();
                 mds.close();
                 System.out.println("Kopiersklave start");
-                Kopiersklave.copyFile(this.getDatabasePath("migronitor." + id + ".db").getParent(), "/migronitor." + id + ".db", "/storage/sdcard0/Migronitor");
-                Kopiersklave.copyFile(this.getDatabasePath("migronitorglobaldata.db").getParent(), "/migronitorglobaldata.db", "/storage/sdcard0/Migronitor");
+                Kopiersklave.copyFile(this.getDatabasePath("migronitor." + id + ".db").getParent(), "/migronitor." + id + ".db");
+                Kopiersklave.copyFile(this.getDatabasePath("migronitorglobaldata.db").getParent(), "/migronitorglobaldata.db");
                 System.out.println("Löschen");
                 File f = this.getDatabasePath("migronitor." + id + ".db");
+                //noinspection ResultOfMethodCallIgnored
                 f.delete();
 
                 id++;

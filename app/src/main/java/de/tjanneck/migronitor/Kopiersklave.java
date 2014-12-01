@@ -12,22 +12,22 @@ import java.io.OutputStream;
 /**
  * Created by Programmieren on 27.11.2014.
  */
-public class Kopiersklave {
-    public static void copyFile(String inputPath, String inputFile, String outputPath) {
+class Kopiersklave {
+    public static void copyFile(String inputPath, String inputFile) {
 
-        InputStream in = null;
-        OutputStream out = null;
+        InputStream in;
+        OutputStream out;
         try {
 
             //create output directory if it doesn't exist
-            File dir = new File(outputPath);
+            File dir = new File("/storage/sdcard0/Migronitor");
             if (!dir.exists()) {
                 dir.mkdirs();
             }
 
 
             in = new FileInputStream(inputPath + inputFile);
-            out = new FileOutputStream(outputPath + inputFile);
+            out = new FileOutputStream("/storage/sdcard0/Migronitor" + inputFile);
 
             byte[] buffer = new byte[1024];
             int read;
@@ -35,12 +35,12 @@ public class Kopiersklave {
                 out.write(buffer, 0, read);
             }
             in.close();
-            in = null;
+
 
             // write the output file (You have now copied the file)
             out.flush();
             out.close();
-            out = null;
+
 
         } catch (FileNotFoundException fnfe1) {
             Log.e("tag", fnfe1.getMessage());

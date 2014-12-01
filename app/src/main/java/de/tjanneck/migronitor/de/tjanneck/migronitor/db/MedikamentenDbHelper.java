@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Programmieren on 24.11.2014.
  */
-public class MedikamentenDbHelper extends SQLiteOpenHelper {
+class MedikamentenDbHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_MEDIKAMENTE = "medikamente";
     public static final String COLUMN_ID = "_id";

@@ -57,7 +57,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
 
     private void editRequest() {
 
-        ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
+        @SuppressWarnings("unchecked") ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
         int cntChoice = this.getListView().getCount();
         SparseBooleanArray selected = this.getListView().getCheckedItemPositions();
         for (int i = 0; i < cntChoice; i++) {
@@ -78,7 +78,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!input.getText().toString().equalsIgnoreCase("")) {
-                            ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
+                            @SuppressWarnings("unchecked") ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
 
                             adapter.getItem(finalI).setName(input.getText().toString());
                             adapter.getItem(finalI).setActive(true);
@@ -131,7 +131,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
     }
 
     private void delete() {
-        ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
+        @SuppressWarnings("unchecked") ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
         int cntChoice = this.getListView().getCount();
         SparseBooleanArray selected = this.getListView().getCheckedItemPositions();
 
@@ -156,7 +156,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
         setListAdapter(adapter);
     }
 
-    public void creationRequest() {
+    void creationRequest() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Medikamentenname");
 
@@ -169,7 +169,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
         builder.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
+                @SuppressWarnings("unchecked") ArrayAdapter<Medikament> adapter = (ArrayAdapter<Medikament>) getListAdapter();
                 adapter.add(datasource.createMedikament(input.getText().toString()));
 
             }

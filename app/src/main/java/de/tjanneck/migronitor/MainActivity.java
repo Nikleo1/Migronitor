@@ -26,12 +26,12 @@ import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
 
 public class MainActivity extends ActionBarActivity {
 
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     private int schmerzstaerke;
     private boolean attacke;
     private boolean schlafen;
     private SharedPreferences prefs;
     private MigronitorDataSource migronitorDatasource;
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +162,7 @@ public class MainActivity extends ActionBarActivity {
 
     //Buttons
 
-    public void OnClickPlus(View v) {
+    public void OnClickPlus(@SuppressWarnings("UnusedParameters") View v) {
 
         if (this.schmerzstaerke < 10) {
             this.schmerzstaerke++;
@@ -179,7 +179,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void OnClickMinus(View v) {
+    public void OnClickMinus(@SuppressWarnings("UnusedParameters") View v) {
 
         if (this.schmerzstaerke > 0) {
             this.schmerzstaerke--;
@@ -199,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void OnClickAttacke(View v) {
+    public void OnClickAttacke(@SuppressWarnings("UnusedParameters") View v) {
 
 
         if (!attacke) {
@@ -222,7 +222,7 @@ public class MainActivity extends ActionBarActivity {
         this.drawButton("attacke");
     }
 
-    public void OnClickSchlafen(View v) {
+    public void OnClickSchlafen(@SuppressWarnings("UnusedParameters") View v) {
 
         this.schlafen = !schlafen;
         prefs.edit().putBoolean("schlafen", schlafen).apply();
@@ -230,7 +230,8 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    public void OnClickMedikamente(View v) {
-
+    public void OnClickMedikamente(@SuppressWarnings("UnusedParameters") View v) {
+        //TODO MED
+        System.out.println("MEd");
     }
 }

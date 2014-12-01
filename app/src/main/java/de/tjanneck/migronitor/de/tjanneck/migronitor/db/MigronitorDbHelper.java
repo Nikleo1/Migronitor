@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by Programmieren on 24.11.2014.
  */
-public class MigronitorDbHelper extends SQLiteOpenHelper {
+class MigronitorDbHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_SCHMERZSTAERKE = "schmerzstaerke";
     public static final String COLUMN_SCHMERZSTAERKE_ID = "_id";

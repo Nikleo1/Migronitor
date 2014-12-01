@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -20,38 +18,43 @@ import android.preference.PreferenceFragment;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
+@SuppressWarnings("deprecation")
 public class Einstellungen extends PreferenceActivity {
-    /**
-     * Determines whether to always show the simplified settings UI, where
-     * settings are presented in a single list. When false, settings are shown
-     * as a master/detail two-pane view on tablets. When true, a single pane is
-     * shown on tablets.
-     */
-    private static final boolean ALWAYS_SIMPLE_PREFS = false;
-    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
-
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
-            }
-            return true;
-        }
-    };
+// --Commented out by Inspection START (02.12.2014 00:33):
+//    /**
+//     * Determines whether to always show the simplified settings UI, where
+//     * settings are presented in a single list. When false, settings are shown
+//     * as a master/detail two-pane view on tablets. When true, a single pane is
+//     * shown on tablets.
+//     */
+//    private static final boolean ALWAYS_SIMPLE_PREFS = false;
+// --Commented out by Inspection STOP (02.12.2014 00:33)
+// --Commented out by Inspection START (02.12.2014 00:33):
+//    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+//        @Override
+//        public boolean onPreferenceChange(Preference preference, Object value) {
+//            String stringValue = value.toString();
+//
+//            if (preference instanceof ListPreference) {
+//                // For list preferences, look up the correct display value in
+//                // the preference's 'entries' list.
+//                ListPreference listPreference = (ListPreference) preference;
+//                int index = listPreference.findIndexOfValue(stringValue);
+//
+//                // Set the summary to reflect the new value.
+//                preference.setSummary(
+//                        index >= 0
+//                                ? listPreference.getEntries()[index]
+//                                : null);
+//
+//                // For all other preferences, set the summary to the value's
+//                // simple string representation.
+//                preference.setSummary(stringValue);
+//            }
+//            return true;
+//        }
+//    };
+// --Commented out by Inspection STOP (02.12.2014 00:33)
 
     /**
      * Helper method to determine if the device has an extra-large screen. For
@@ -62,22 +65,7 @@ public class Einstellungen extends PreferenceActivity {
                 & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
     }
 
-    /**
-     * Determines whether the simplified settings UI should be shown. This is
-     * true if this is forced via {@link #ALWAYS_SIMPLE_PREFS}, or the device
-     * doesn't have newer APIs like {@link PreferenceFragment}, or the device
-     * doesn't have an extra-large screen. In these cases, a single-pane
-     * "simplified" settings UI should be shown.
-     */
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    public void MedikamenenListe() {
+    void MedikamenenListe() {
         Intent intent = new Intent(this, MedikamentenSettingsActivity.class);
         startActivity(intent);
     }
@@ -103,7 +91,7 @@ public class Einstellungen extends PreferenceActivity {
         // Add 'general' preferences.
         addPreferencesFromResource(R.xml.pref_general);
 
-        Preference button = (Preference) findPreference("Medikamente");
+        Preference button = findPreference("Medikamente");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference arg0) {

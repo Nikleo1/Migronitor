@@ -16,12 +16,12 @@ import java.util.List;
  */
 public class MigronitorOutDataSource {
 
+    private final MigronitorOutDbHelper dbHelper;
+    private final String[] allColumns = {MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID,
+            MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DATE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED};
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     // Database fields
     private SQLiteDatabase database;
-    private MigronitorOutDbHelper dbHelper;
-    private String[] allColumns = {MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID,
-            MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DATE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED};
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
     public MigronitorOutDataSource(Context context, int dbv) {
         dbHelper = new MigronitorOutDbHelper(context, "migronitor." + dbv + ".db");
@@ -55,7 +55,7 @@ public class MigronitorOutDataSource {
         String selection = MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID + " = ?";
         String[] selectionArgs = {s.getId() + ""};
 
-        int count = database.update(
+        database.update(
                 MigronitorOutDbHelper.TABLE_SCHMERZSTAERKE,
                 values,
                 selection,

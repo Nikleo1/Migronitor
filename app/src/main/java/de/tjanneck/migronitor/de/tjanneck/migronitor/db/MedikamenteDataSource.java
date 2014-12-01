@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class MedikamenteDataSource {
 
+    private final MedikamentenDbHelper dbHelper;
+    private final String[] allColumns = {MedikamentenDbHelper.COLUMN_ID,
+            MedikamentenDbHelper.COLUMN_NAME, MedikamentenDbHelper.COLUMN_ACTIVE};
     // Database fields
     private SQLiteDatabase database;
-    private MedikamentenDbHelper dbHelper;
-    private String[] allColumns = {MedikamentenDbHelper.COLUMN_ID,
-            MedikamentenDbHelper.COLUMN_NAME, MedikamentenDbHelper.COLUMN_ACTIVE};
 
     public MedikamenteDataSource(Context context) {
         dbHelper = new MedikamentenDbHelper(context);
@@ -56,7 +56,7 @@ public class MedikamenteDataSource {
         String selection = MedikamentenDbHelper.COLUMN_ID + " = ?";
         String[] selectionArgs = {m.getId() + ""};
 
-        int count = database.update(
+        database.update(
                 MedikamentenDbHelper.TABLE_MEDIKAMENTE,
                 values,
                 selection,

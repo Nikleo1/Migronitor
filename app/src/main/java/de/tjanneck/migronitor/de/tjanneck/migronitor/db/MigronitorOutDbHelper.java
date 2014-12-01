@@ -27,10 +27,6 @@ public class MigronitorOutDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public String getDbName() {
-        return "";
-    }
-
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_SCHMERZSTAERKE_CREATE);

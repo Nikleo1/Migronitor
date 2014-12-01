@@ -3,7 +3,6 @@ package de.tjanneck.migronitor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -70,11 +69,7 @@ public class Einstellungen extends PreferenceActivity {
      * doesn't have an extra-large screen. In these cases, a single-pane
      * "simplified" settings UI should be shown.
      */
-    private static boolean isSimplePreferences(Context context) {
-        return ALWAYS_SIMPLE_PREFS
-                || Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-                || !isXLargeTablet(context);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +95,7 @@ public class Einstellungen extends PreferenceActivity {
      * shown.
      */
     private void setupSimplePreferencesScreen() {
-        if (!isSimplePreferences(this)) {
-            return;
-        }
+
 
         // In the simplified UI, fragments are not used at all and we instead
         // use the older PreferenceActivity APIs.
@@ -120,14 +113,6 @@ public class Einstellungen extends PreferenceActivity {
             }
         });
         // List preference under the category
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this) && !isSimplePreferences(this);
     }
 
 

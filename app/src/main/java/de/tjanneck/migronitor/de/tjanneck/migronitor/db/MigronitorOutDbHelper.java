@@ -20,12 +20,10 @@ public class MigronitorOutDbHelper extends SQLiteOpenHelper {
             + " integer primary key, " + COLUMN_SCHMERZSTAERKE_DATE
             + " text not null, " + COLUMN_SCHMERZSTAERKE_STAERKE + " integer, " + COLUMN_SCHMERZSTAERKE_DELETED + " boolean);";
     private static final int DATABASE_VERSION = 1;
-    private String dbname;
 
 
     public MigronitorOutDbHelper(Context context, String dbName) {
         super(context, dbName, null, DATABASE_VERSION);
-        this.dbname = dbName;
 
     }
 

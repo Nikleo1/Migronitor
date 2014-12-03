@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
 
@@ -197,6 +198,16 @@ public class MainActivity extends ActionBarActivity {
 
 
         if (!attacke) {
+            Attacke a = new Attacke();
+            a.setId(prefs.getLong("AttackenID", 1));
+            a.setDatumStart(new Date());
+            a.setDatumEnde(new Date());
+            a.setBemerkung("");
+            migronitorDatasource.createAttacke(a);
+            System.out.println("AID " + a.getId());
+            prefs.edit().putLong("AttackenID", a.getId() + 1).apply();
+
+
             this.attacke = true;
             int attackkenpref = Integer.parseInt(prefs.getString("schmerzAttacke_list", "7"));
             if (attackkenpref > this.schmerzstaerke) {
@@ -206,7 +217,11 @@ public class MainActivity extends ActionBarActivity {
             }
 
         } else {
+            Attacke a = migronitorDatasource.getAttacke(prefs.getLong("AttackenID", 1) - 1);
+            a.setDatumEnde(new Date());
+            migronitorDatasource.updateAttacke(a);
             this.attacke = false;
+
 
         }
         prefs.edit().putBoolean("attacke", attacke).apply();

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorOutDataSource;
@@ -51,14 +52,23 @@ public class DbRotator extends IntentService {
             System.out.println("Checking " + sae.size() + " Schmerzaenderungen");
             for (Schmerzaenderung s : sae) {
                 if (s.getDatum().before(vgl)) {
-                    System.out.println("Transferring item");
                     mos.createSchmerzaenderung(s);
                     ms.deleteSchmerzaenderung(s);
                 }
             }
+            System.out.println("Schmerzaenderungen transferred");
+            List<Attacke> att = ms.getAllAttacken();
+            System.out.println("Checking " + att.size() + " Attacken");
+            for (Attacke a : att) {
+                if (a.getDatumStart().before(vgl) && a.getDatumStart() != a.getDatumEnde()) {
+                    mos.createAttacke(a);
+                    ms.deleteAttacke(a);
+                }
+            }
+            System.out.println("Attacken transferred");
             mos.close();
             ms.close();
-            System.out.println("Schmerzaenderungen transferred");
+            System.out.println("Trannsferring Datas completed");
             //Rotieren
             if (lastrotate.before(vglr)) {
                 System.out.println("Database rotating ...");

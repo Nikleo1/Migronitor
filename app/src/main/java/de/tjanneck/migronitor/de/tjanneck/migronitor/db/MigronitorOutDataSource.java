@@ -17,15 +17,21 @@ import java.util.List;
 public class MigronitorOutDataSource {
 
     private final MigronitorOutDbHelper dbHelper;
-    private final String[] allColumns = {MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID,
-            MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DATE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED};
-    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-    // Database fields
-    private SQLiteDatabase database;
-
     public MigronitorOutDataSource(Context context, int dbv) {
         dbHelper = new MigronitorOutDbHelper(context, "migronitor." + dbv + ".db");
     }
+
+
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+    private final String[] allColumnsSchmerzStaerke = {MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_ID,
+            MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DATE, MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DELETED};
+    private final String[] allColumnsAttacken = {MigronitorDbHelper.COLUMN_ATTACKEN_ID,
+            MigronitorDbHelper.COLUMN_ATTACKEN_DATESTART, MigronitorDbHelper.COLUMN_ATTACKEN_DATEENDE, MigronitorDbHelper.COLUMN_ATTACKEN_BEMERKUNG};
+
+    // Database fields
+    private SQLiteDatabase database;
+
 
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
@@ -34,29 +40,30 @@ public class MigronitorOutDataSource {
     public void close() {
         dbHelper.close();
     }
+    //Schmerzaenderungen
 
     public void createSchmerzaenderung(Schmerzaenderung s) {
         ContentValues values = new ContentValues();
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID, s.getId());
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DATE, dateFormater.format(s.getDatum()));
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, s.getStaerke());
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED, false);
-        database.insert(MigronitorOutDbHelper.TABLE_SCHMERZSTAERKE, null, values);
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_ID, s.getId());
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DATE, dateFormater.format(s.getDatum()));
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, s.getStaerke());
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DELETED, false);
+        database.insert(MigronitorDbHelper.TABLE_SCHMERZSTAERKE, null, values);
     }
 
     public void updateSchmerzaenderung(Schmerzaenderung s) {
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID, s.getId());
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DATE, dateFormater.format(s.getDatum()));
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, s.getStaerke());
-        values.put(MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED, s.isDeleted());
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_ID, s.getId());
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DATE, dateFormater.format(s.getDatum()));
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_STAERKE, s.getStaerke());
+        values.put(MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DELETED, s.isDeleted());
         //Which row to update, based on the ID
-        String selection = MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_ID + " = ?";
+        String selection = MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_ID + " = ?";
         String[] selectionArgs = {s.getId() + ""};
 
         database.update(
-                MigronitorOutDbHelper.TABLE_SCHMERZSTAERKE,
+                MigronitorDbHelper.TABLE_SCHMERZSTAERKE,
                 values,
                 selection,
                 selectionArgs);
@@ -66,8 +73,8 @@ public class MigronitorOutDataSource {
     public List<Schmerzaenderung> getAllSchmerzaenderungen() {
         List<Schmerzaenderung> se = new ArrayList<Schmerzaenderung>();
 
-        Cursor cursor = database.query(MigronitorOutDbHelper.TABLE_SCHMERZSTAERKE,
-                allColumns, null, null, null, null, null);
+        Cursor cursor = database.query(MigronitorDbHelper.TABLE_SCHMERZSTAERKE,
+                allColumnsSchmerzStaerke, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -84,8 +91,8 @@ public class MigronitorOutDataSource {
         List<Schmerzaenderung> se = new ArrayList<Schmerzaenderung>();
         String[] selectionargs = {0 + ""};
 
-        Cursor cursor = database.query(MigronitorOutDbHelper.TABLE_SCHMERZSTAERKE,
-                allColumns, MigronitorOutDbHelper.COLUMN_SCHMERZSTAERKE_DELETED + "=?", selectionargs, null, null, null);
+        Cursor cursor = database.query(MigronitorDbHelper.TABLE_SCHMERZSTAERKE,
+                allColumnsSchmerzStaerke, MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DELETED + "=?", selectionargs, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -97,6 +104,16 @@ public class MigronitorOutDataSource {
         cursor.close();
         return se;
     }
+
+    public void deleteSchmerzaenderung(Schmerzaenderung s) {
+        // Define 'where' part of query.
+        String selection = MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_ID + " = ?";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = {String.valueOf(s.getId())};
+        // Issue SQL statement.
+        database.delete(MigronitorDbHelper.TABLE_SCHMERZSTAERKE, selection, selectionArgs);
+    }
+
 
     private Schmerzaenderung cursorToSchmerzaenderung(Cursor cursor) {
         Schmerzaenderung s = new Schmerzaenderung();
@@ -110,5 +127,83 @@ public class MigronitorOutDataSource {
         }
 
         return s;
+    }
+
+    //Attacken
+    public void createAttacke(Attacke a){
+        ContentValues values = new ContentValues();
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_ID, a.getId());
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_DATESTART,  dateFormater.format(a.getDatumStart()));
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_DATEENDE,  dateFormater.format(a.getDatumEnde()));
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_BEMERKUNG, a.getBemerkung());
+        database.insert(MigronitorDbHelper.TABLE_ATTACKEN,null,values);
+    }
+
+    public void updateAttacke(Attacke a) {
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_ID, a.getId());
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_DATESTART,  dateFormater.format(a.getDatumStart()));
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_DATEENDE,  dateFormater.format(a.getDatumEnde()));
+        values.put(MigronitorDbHelper.COLUMN_ATTACKEN_BEMERKUNG, a.getBemerkung());
+        //Which row to update, based on the ID
+        String selection = MigronitorDbHelper.COLUMN_ATTACKEN_ID + " = ?";
+        String[] selectionArgs = {a.getId() + ""};
+
+        database.update(
+                MigronitorDbHelper.TABLE_ATTACKEN,
+                values,
+                selection,
+                selectionArgs);
+    }
+
+    public Attacke getAttacke(long id){
+        String selection = MigronitorDbHelper.COLUMN_ATTACKEN_ID + " = ?";
+        String[] selectionArgs = {id + ""};
+
+        Cursor cursor = database.query(MigronitorDbHelper.TABLE_ATTACKEN,
+                allColumnsAttacken, selection, selectionArgs, null, null, null);
+        cursor.moveToFirst();
+        return cursorToAttacke(cursor);
+
+    }
+
+    public void deleteAttacke(Attacke a) {
+        // Define 'where' part of query.
+        String selection = MigronitorDbHelper.COLUMN_ATTACKEN_ID + " = ?";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = {String.valueOf(a.getId())};
+        // Issue SQL statement.
+        database.delete(MigronitorDbHelper.TABLE_ATTACKEN, selection, selectionArgs);
+    }
+
+    public List<Attacke> getAllAttacken() {
+        List<Attacke> se = new ArrayList<Attacke>();
+        Cursor cursor = database.query(MigronitorDbHelper.TABLE_ATTACKEN,
+                allColumnsAttacken, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Attacke a = cursorToAttacke(cursor);
+            se.add(a);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return se;
+    }
+
+    private Attacke cursorToAttacke(Cursor cursor) {
+        Attacke a = new Attacke();
+        try {
+            a.setId(cursor.getInt(0));
+            a.setDatumStart(dateFormater.parse(cursor.getString(1)));
+            a.setDatumEnde(dateFormater.parse(cursor.getString(2)));
+            a.setBemerkung(cursor.getString(3));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return a;
     }
 }

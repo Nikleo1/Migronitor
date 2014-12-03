@@ -21,7 +21,8 @@
         android:background="#5a3dff49"
         android:enabled="true"
         android:onClick="OnClickAttacke"
-        android:text="Attacke" />
+        android:text="Attacke"
+        android:minHeight="50dp" />
 
     <Button
         android:id="@+id/mnehmen"
@@ -35,7 +36,8 @@
         android:layout_marginBottom="10dp"
         android:background="#50ffd200"
         android:onClick="OnClickMedikamente"
-        android:text="Medikamente nehmen" />
+        android:text="Medikamente nehmen"
+        android:minHeight="50dp" />
 
     <Button
         android:id="@+id/schlafen"
@@ -49,7 +51,8 @@
         android:layout_marginBottom="10dp"
         android:background="#4b01a0ff"
         android:onClick="OnClickSchlafen"
-        android:text="Schlafen" />
+        android:text="Schlafen"
+        android:minHeight="50dp" />
 
     <TextView
         android:id="@+id/schmerz"
@@ -83,7 +86,8 @@
         android:background="#41ff0600"
         android:onClick="OnClickPlus"
         android:text="+"
-        android:textSize="75dp" />
+        android:textSize="75dp"
+        android:minWidth="100dp" />
 
     <Button
         android:id="@+id/minus"
@@ -97,6 +101,7 @@
         android:background="#4100ff1b"
         android:onClick="OnClickMinus"
         android:text="-"
-        android:textSize="75dp" />
+        android:textSize="75dp"
+        android:minWidth="100dp" />
 
 </RelativeLayout>

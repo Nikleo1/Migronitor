@@ -163,6 +163,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
         // Set up the input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
+        //TODO Textfarbe android 2.3
         builder.setView(input);
 
         // Set up the buttons

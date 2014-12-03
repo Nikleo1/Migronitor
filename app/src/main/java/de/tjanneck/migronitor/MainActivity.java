@@ -212,6 +212,8 @@ public class MainActivity extends ActionBarActivity {
                 s.setDatum(new Date());
                 s.setStaerke(this.schmerzstaerke);
                 migronitorDatasource.createSchmerzaenderung(s);
+                prefs.edit().putInt("schmerzAenderungID", s.getId() + 1).apply();
+                prefs.edit().putInt("schmerzstaerke", schmerzstaerke).apply();
             }
 
         } else {

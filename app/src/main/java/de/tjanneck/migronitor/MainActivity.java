@@ -159,6 +159,18 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+    //DATA
+
+    private void speichereSchmerzaenderung(){
+        Schmerzaenderung s = new Schmerzaenderung();
+        s.setId(prefs.getInt("schmerzAenderungID", 1));
+        s.setDatum(new Date());
+        s.setStaerke(this.schmerzstaerke);
+        migronitorDatasource.createSchmerzaenderung(s);
+        prefs.edit().putInt("schmerzAenderungID", s.getId() + 1).apply();
+        prefs.edit().putInt("schmerzstaerke", schmerzstaerke).apply();
+        this.drawButton("schmerzen");
+    }
 
     //Buttons
 
@@ -166,16 +178,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (this.schmerzstaerke < 10) {
             this.schmerzstaerke++;
-
-            Schmerzaenderung s = new Schmerzaenderung();
-            s.setId(prefs.getInt("schmerzAenderungID", 1));
-            s.setDatum(new Date());
-            s.setStaerke(this.schmerzstaerke);
-            migronitorDatasource.createSchmerzaenderung(s);
-            prefs.edit().putInt("schmerzAenderungID", s.getId() + 1).apply();
-
-            prefs.edit().putInt("schmerzstaerke", schmerzstaerke).apply();
-            this.drawButton("schmerzen");
+            speichereSchmerzaenderung();
         }
     }
 
@@ -183,16 +186,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (this.schmerzstaerke > 0) {
             this.schmerzstaerke--;
-
-            Schmerzaenderung s = new Schmerzaenderung();
-            s.setId(prefs.getInt("schmerzAenderungID", 1));
-            s.setDatum(new Date());
-            s.setStaerke(this.schmerzstaerke);
-            migronitorDatasource.createSchmerzaenderung(s);
-            prefs.edit().putInt("schmerzAenderungID", s.getId() + 1).apply();
-
-            prefs.edit().putInt("schmerzstaerke", schmerzstaerke).apply();
-            this.drawButton("schmerzen");
+            speichereSchmerzaenderung();
 
 
         }
@@ -208,12 +202,7 @@ public class MainActivity extends ActionBarActivity {
             if (attackkenpref > this.schmerzstaerke) {
                 Schmerzaenderung s = new Schmerzaenderung();
                 this.schmerzstaerke = attackkenpref;
-                s.setId(prefs.getInt("schmerzAenderungID", 1));
-                s.setDatum(new Date());
-                s.setStaerke(this.schmerzstaerke);
-                migronitorDatasource.createSchmerzaenderung(s);
-                prefs.edit().putInt("schmerzAenderungID", s.getId() + 1).apply();
-                prefs.edit().putInt("schmerzstaerke", schmerzstaerke).apply();
+                speichereSchmerzaenderung();
             }
 
         } else {

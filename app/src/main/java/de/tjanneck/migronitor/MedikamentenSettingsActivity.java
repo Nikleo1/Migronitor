@@ -3,6 +3,7 @@ package de.tjanneck.migronitor;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.SparseBooleanArray;
@@ -163,7 +164,7 @@ public class MedikamentenSettingsActivity extends ListActivity {
         // Set up the input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        //TODO Textfarbe android 2.3
+        input.setBackgroundColor(Color.WHITE);
         builder.setView(input);
 
         // Set up the buttons

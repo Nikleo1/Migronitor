@@ -12,8 +12,8 @@ import android.widget.ListView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
+
+import de.tjanneck.migronitor.db.MigronitorDataSource;
 
 /**
  * Created by Programmieren on 04.12.2014.
@@ -54,7 +54,6 @@ public class AttackenBearbeiten extends Activity implements AdapterView.OnItemCl
         intent.putExtras(b); //Put your id to your next Intent
         startActivity(intent);
     }
-
 
 
 }

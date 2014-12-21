@@ -11,13 +11,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamentenEinwurf;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorOutDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schlaf;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
+import de.tjanneck.migronitor.db.Attacke;
+import de.tjanneck.migronitor.db.MedikamenteDataSource;
+import de.tjanneck.migronitor.db.MedikamentenEinwurf;
+import de.tjanneck.migronitor.db.MigronitorDataSource;
+import de.tjanneck.migronitor.db.MigronitorOutDataSource;
+import de.tjanneck.migronitor.db.Schlaf;
+import de.tjanneck.migronitor.db.Schmerzaenderung;
 
 /**
  * Created by Programmieren on 27.11.2014.

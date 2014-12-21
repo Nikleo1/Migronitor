@@ -20,10 +20,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schlaf;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
+import de.tjanneck.migronitor.db.Attacke;
+import de.tjanneck.migronitor.db.MigronitorDataSource;
+import de.tjanneck.migronitor.db.Schlaf;
+import de.tjanneck.migronitor.db.Schmerzaenderung;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -167,7 +167,7 @@ public class MainActivity extends ActionBarActivity {
     }
     //DATA
 
-    private void speichereSchmerzaenderung(){
+    private void speichereSchmerzaenderung() {
         Schmerzaenderung s = new Schmerzaenderung();
         s.setId(prefs.getInt("schmerzAenderungID", 1));
         s.setDatum(new Date());

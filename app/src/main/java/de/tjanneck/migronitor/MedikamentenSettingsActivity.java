@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Medikament;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
+import de.tjanneck.migronitor.db.Medikament;
+import de.tjanneck.migronitor.db.MedikamenteDataSource;
 
 /**
  * Created by Programmieren on 24.11.2014.

@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
+import de.tjanneck.migronitor.db.Attacke;
+import de.tjanneck.migronitor.db.MigronitorDataSource;
 
 
 public class AttackeBearbeiten extends Activity {

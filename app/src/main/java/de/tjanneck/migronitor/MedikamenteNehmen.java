@@ -12,9 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamentenEinwurf;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
+import de.tjanneck.migronitor.db.MedikamenteDataSource;
+import de.tjanneck.migronitor.db.MedikamentenEinwurf;
+import de.tjanneck.migronitor.db.MigronitorDataSource;
 
 /**
  * Created by Programmieren on 04.12.2014.

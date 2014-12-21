@@ -1,4 +1,4 @@
-package de.tjanneck.migronitor.de.tjanneck.migronitor.db;
+package de.tjanneck.migronitor.db;
 
 
 import java.util.Date;

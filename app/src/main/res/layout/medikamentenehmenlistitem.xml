@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
 
+    <TextView
+        android:id="@+id/nehmen_menge"
+        android:layout_width="40dp"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:text="menge"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ff000000"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/nehmen_name"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:text="Medikamentenname"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/nehmen_plus"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.25"
+        android:contentDescription=""
+        android:onClick="nehmenPlusHandler"
+        android:text="+"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/nehmen_minus"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.25"
+        android:contentDescription=""
+        android:onClick="nehmenMinusHandler"
+        android:text="-"
+        android:textSize="25dp" />
 </LinearLayout>

@@ -13,8 +13,10 @@ import java.util.List;
 
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamentenEinwurf;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorOutDataSource;
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schlaf;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
 
 /**
@@ -57,6 +59,7 @@ public class DbRotator extends IntentService {
                 }
             }
             System.out.println("Schmerzaenderungen transferred");
+
             List<Attacke> att = ms.getAllAttacken();
             System.out.println("Checking " + att.size() + " Attacken");
             for (Attacke a : att) {
@@ -66,6 +69,27 @@ public class DbRotator extends IntentService {
                 }
             }
             System.out.println("Attacken transferred");
+
+            List<Schlaf> schl = ms.getAllSchlaf();
+            System.out.println("Checking " + schl.size() + " Schlaf");
+            for (Schlaf s : schl) {
+                if (s.getSchlafen().before(vgl) && s.getSchlafen() != s.getWach()) {
+                    mos.createSchlaf(s);
+                    ms.deleteSchlaf(s);
+                }
+            }
+            System.out.println("Schlaf transferred");
+
+            List<MedikamentenEinwurf> ml = ms.getAllMedikamentenEinwuerfe();
+            System.out.println("Checking " + ml.size() + " MedikamentenEinwuerfe");
+            for (MedikamentenEinwurf m : ml) {
+                if (m.getDatum().before(vgl)) {
+                    mos.createMedikamentenEinwurf(m);
+                    ms.deleteMedikamentenEinwurf(m);
+                }
+            }
+            System.out.println("MedikamentenEinwuerfe transferred");
+
             mos.close();
             ms.close();
             System.out.println("Trannsferring Datas completed");

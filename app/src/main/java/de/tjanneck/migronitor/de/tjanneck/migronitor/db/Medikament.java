@@ -1,7 +1,9 @@
 package de.tjanneck.migronitor.de.tjanneck.migronitor.db;
 
 
-public class Medikament {
+import java.io.Serializable;
+
+public class Medikament implements Serializable {
     private long id;
     private String name;
     private boolean active;

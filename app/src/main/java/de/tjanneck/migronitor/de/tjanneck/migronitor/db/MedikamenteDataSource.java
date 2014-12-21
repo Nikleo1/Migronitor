@@ -87,6 +87,7 @@ public class MedikamenteDataSource {
         return meds;
     }
 
+
     public List<Medikament> getActiveMedikaments() {
         List<Medikament> meds = new ArrayList<Medikament>();
         String[] selectionargs = {1 + ""};

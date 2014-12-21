@@ -5,21 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Medikamente nehmen"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:minHeight="50dp"
-        android:background="#50ffd200"
-        android:onClick="OnClickNehmen" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="5dp"
+        android:text="Attacken der letzten Woche :"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
-        android:id="@+id/MedikamenteNehmenListe"
+        android:id="@+id/AttackenListe"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout> 

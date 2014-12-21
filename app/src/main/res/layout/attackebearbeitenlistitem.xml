@@ -2,46 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:minHeight="30dp"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/nehmen_menge"
+        android:id="@+id/attacke_bearbeiten_datum"
         android:layout_width="40dp"
         android:layout_height="fill_parent"
-        android:gravity="center"
-        android:inputType="numberDecimal"
-        android:text="menge"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="0.64"
+        android:gravity="center|left"
+        android:minHeight="30dp"
+        android:text="@string/attacke_bearbeiten_datum"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="30dp"
-        android:textColor="#ff000000" />
+        android:textColor="#ff000000"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/nehmen_name"
+        android:id="@+id/attacke_bearbeiten_dauer"
         android:layout_width="0sp"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.49"
         android:gravity="center"
-        android:inputType="numberDecimal"
-        android:text="Medikamentenname"
+        android:text="Dauer"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="16dp" />
 
-    <Button
-        android:id="@+id/nehmen_plus"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.25"
-        android:contentDescription=""
-        android:onClick="nehmenPlusHandler"
-        android:text="+"
-        android:textSize="25dp" />
-    <Button
-        android:id="@+id/nehmen_minus"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.25"
-        android:contentDescription=""
-        android:onClick="nehmenMinusHandler"
-        android:text="-"
-        android:textSize="25dp" />
+
 </LinearLayout>

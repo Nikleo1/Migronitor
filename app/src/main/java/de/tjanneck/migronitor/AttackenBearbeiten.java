@@ -1,98 +1,62 @@
 package de.tjanneck.migronitor;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamenteDataSource;
-import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MedikamentenEinwurf;
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
 
 /**
  * Created by Programmieren on 04.12.2014.
  */
-public class AttackenBearbeiten extends Activity {
-    private MedikamenteDataSource datasource;
+public class AttackenBearbeiten extends Activity implements AdapterView.OnItemClickListener {
+
+    private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private final SimpleDateFormat dateFormaterAttacke = new SimpleDateFormat("HH:mm");
     private MigronitorDataSource mdatasource;
-    private HashMap<Long,Integer> einwurf;
     private SharedPreferences prefs;
+    private List<Attacke> attacken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.medikamentenehmen);
+        setContentView(R.layout.attackenbearbeiten);
 
-        einwurf = new HashMap<Long,Integer>();
-        datasource = new MedikamenteDataSource(this);
         mdatasource = new MigronitorDataSource(this);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        datasource.open();
         mdatasource.open();
 
-        MedikamenteNehmenListAdapter adapter = new MedikamenteNehmenListAdapter(AttackenBearbeiten.this, R.layout.medikamentenehmenlistitem, datasource.getActiveMedikaments());
-        ListView medListView = (ListView)findViewById(R.id.MedikamenteNehmenListe);
-        medListView.setAdapter(adapter);
+        AttackenBearbeitenListAdapter adapter = new AttackenBearbeitenListAdapter(AttackenBearbeiten.this, R.layout.attackebearbeitenlistitem, mdatasource.getLastAttacken());
+        ListView attListView = (ListView) findViewById(R.id.AttackenListe);
+        attListView.setAdapter(adapter);
+        attListView.setOnItemClickListener(this);
 
     }
-    public void OnClickNehmen(@SuppressWarnings("UnusedParameters") View v) {
-        for(Map.Entry<Long,Integer> e :einwurf.entrySet()){
-            if(e.getValue() != 0) {
-                MedikamentenEinwurf m = new MedikamentenEinwurf();
-                m.setId(prefs.getLong("medikamentenehmenID", 1));
-                m.setDatum(new Date());
-                m.setMid(e.getKey());
-                m.setMenge(e.getValue());
-                mdatasource.createMedikamentenEinwurf(m);
-                prefs.edit().putLong("medikamentenehmenID", m.getId() + 1).apply();
-            }
-        }
-        this.finish();
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        AttackenBearbeitenListAdapter.AttackeBearbeitenHolder item = (AttackenBearbeitenListAdapter.AttackeBearbeitenHolder) view.getTag();
+        Intent intent = new Intent(AttackenBearbeiten.this, AttackeBearbeiten.class);
+        Bundle b = new Bundle();
+        b.putLong("id", item.attacke.getId()); //Your id
+        intent.putExtras(b); //Put your id to your next Intent
+        startActivity(intent);
     }
-    public void nehmenPlusHandler(@SuppressWarnings("UnusedParameters") View v) {
-        MedikamenteNehmenListAdapter.MedikamenteNehmenHolder item = (MedikamenteNehmenListAdapter.MedikamenteNehmenHolder)v.getTag();
-
-        if(einwurf.containsKey(item.medikament.getId())){
-            int mengeNeu = einwurf.get(item.medikament.getId());
-            mengeNeu++;
-            einwurf.put(item.medikament.getId(), mengeNeu);
-        }else{
-            einwurf.put(item.medikament.getId(), 1);
-        }
-        item.menge.setText("" + einwurf.get(item.medikament.getId()));
-        if(einwurf.get(item.medikament.getId()) != 0){
-            item.menge.setTextColor(Color.RED);
-        }else{
-            item.menge.setTextColor(Color.BLACK);
-        }
 
 
-    }
-    public void nehmenMinusHandler(@SuppressWarnings("UnusedParameters") View v) {
-        MedikamenteNehmenListAdapter.MedikamenteNehmenHolder item = (MedikamenteNehmenListAdapter.MedikamenteNehmenHolder)v.getTag();
-        if(einwurf.containsKey(item.medikament.getId()) && einwurf.get(item.medikament.getId()) != 0){
-            int mengeNeu = einwurf.get(item.medikament.getId());
-            mengeNeu--;
-            einwurf.put(item.medikament.getId(), mengeNeu);
-        }else{
-            einwurf.put(item.medikament.getId(), 0);
-        }
 
-        item.menge.setText("" + einwurf.get(item.medikament.getId()));
-        if(einwurf.get(item.medikament.getId()) != 0){
-            item.menge.setTextColor(Color.RED);
-        }else{
-            item.menge.setTextColor(Color.BLACK);
-        }
-    }
 }
+
+

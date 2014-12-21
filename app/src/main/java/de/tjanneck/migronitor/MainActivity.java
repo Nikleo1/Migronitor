@@ -22,6 +22,7 @@ import java.util.Date;
 
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.MigronitorDataSource;
+import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schlaf;
 import de.tjanneck.migronitor.de.tjanneck.migronitor.db.Schmerzaenderung;
 
 
@@ -121,6 +122,10 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, Einstellungen.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_attacken) {
+            Intent intent = new Intent(this, AttackenBearbeiten.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -204,7 +209,7 @@ public class MainActivity extends ActionBarActivity {
             a.setDatumEnde(new Date());
             a.setBemerkung("");
             migronitorDatasource.createAttacke(a);
-            System.out.println("AID " + a.getId());
+
             prefs.edit().putLong("AttackenID", a.getId() + 1).apply();
 
 
@@ -230,14 +235,29 @@ public class MainActivity extends ActionBarActivity {
 
     public void OnClickSchlafen(@SuppressWarnings("UnusedParameters") View v) {
 
-        this.schlafen = !schlafen;
+        if (!schlafen) {
+            Schlaf s = new Schlaf();
+            s.setId(prefs.getLong("SchlafenID", 1));
+            s.setSchlafen(new Date());
+            s.setWach(new Date());
+            migronitorDatasource.createSchlaf(s);
+            prefs.edit().putLong("SchlafenID", s.getId() + 1).apply();
+            schlafen = true;
+        } else {
+            Schlaf s = migronitorDatasource.getSchlaf(prefs.getLong("SchlafenID", 1) - 1);
+            s.setWach(new Date());
+            migronitorDatasource.updateSchlaf(s);
+
+            schlafen = false;
+        }
+
         prefs.edit().putBoolean("schlafen", schlafen).apply();
         drawButton("schlafen");
 
     }
 
     public void OnClickMedikamente(@SuppressWarnings("UnusedParameters") View v) {
-        //TODO MED
-        System.out.println("MEd");
+        Intent intent = new Intent(this, MedikamenteNehmen.class);
+        startActivity(intent);
     }
 }

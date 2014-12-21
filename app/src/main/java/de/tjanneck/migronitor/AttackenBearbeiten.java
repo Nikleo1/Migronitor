@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 
+import de.tjanneck.migronitor.db.Attacke;
 import de.tjanneck.migronitor.db.MigronitorDataSource;
 
 /**

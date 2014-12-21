@@ -9,6 +9,11 @@
         android:title="Attacken"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_stats"
+        android:orderInCategory="100"
+        android:title="Statisik"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_info"
         android:orderInCategory="100"
         android:title="Info"

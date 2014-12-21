@@ -126,6 +126,10 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, AttackenBearbeiten.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_stats) {
+            Intent intent = new Intent(this, Statistiken.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

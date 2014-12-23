@@ -42,7 +42,7 @@ public class DbRotator extends IntentService {
         try {
             Date lastrotate = dateFormater.parse(prefs.getString("lastrotate", ""));
 
-            Date vgl = new Date(now.getTime() - 86400000L); //  24 * 60 * 60 * 1000 86400000L
+            Date vgl = new Date(now.getTime() - 604800000L); //   7 * 24 * 60 * 60 * 1000 86400000L
             Date vglr = new Date(now.getTime() - 604800000L); // 7 * 24 * 60 * 60 * 1000 604800000L
             // Daten Tauschen
             MigronitorOutDataSource mos = new MigronitorOutDataSource(this, prefs.getInt("dbVersion", 1));

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.jjoe64.graphview.CustomLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
@@ -30,12 +31,16 @@ import java.util.Map;
 
 import de.tjanneck.migronitor.db.MigronitorDataSource;
 import de.tjanneck.migronitor.db.Schmerzaenderung;
+import de.tjanneck.migronitor.helpers.ZeitSklave;
 
 
 public class Statistiken extends Activity implements AdapterView.OnItemSelectedListener {
     final ArrayList<String> list = new ArrayList<String>();
     private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy");
+    private final SimpleDateFormat dateFormater1 = new SimpleDateFormat("HH:mm");
     private MigronitorDataSource mdatasource;
+    private double first;
+    private double last;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +51,11 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
         mdatasource.open();
 
         Spinner spinner = (Spinner) findViewById(R.id.statsselect);
-        list.add("Durschnitt Tage");
-        list.add("Zahlen");
+        //list.add("Durschnitt Tage");
+        //list.add("Zahlen");
         list.add("Heute");
         list.add("Gestern");
+        list.add("Vorgestern");
 
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
@@ -63,21 +69,59 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.ltest);
-        if (id == 0) {
+        layout.removeAllViews();
+        if (id == 0 || id == 1|| id == 2) {
 
-            GraphViewData[] gd = new GraphViewData[2];
+            Date d = new Date();
+            d = new Date(d.getTime() - id * 1000 * 60 * 60 * 24);
+
+            List<Schmerzaenderung> sae = mdatasource.getSchmerzaenderungenDate(d);
+            GraphViewData[] gd = new GraphViewData[sae.size()];
+            if (!sae.isEmpty()) {
+                first = ZeitSklave.DateToGraph(sae.get(1).getDatum());
+                last = ZeitSklave.DateToGraph(sae.get(sae.size() - 1).getDatum());
+            }
+            for (int i = 0; i < sae.size(); i++) {
+                gd[i] = new GraphViewData(ZeitSklave.DateToGraph(sae.get(i).getDatum()), sae.get(i).getStaerke());
+            }
+
 
             GraphViewSeries gSeries = new GraphViewSeries("", null, gd);
+
             GraphView graphView = new LineGraphView(this, "");
-            graphView.addSeries(gSeries); // data
+
+
             graphView.setVerticalLabels(new String[]{"10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "0"});
+
+            graphView.setManualYAxisBounds(10, 0);
+            graphView.setScalable(true);
+            graphView.setScrollable(true);
+            graphView.setCustomLabelFormatter(new CustomLabelFormatter() {
+                @Override
+                public String formatLabel(double value, boolean isValueX) {
+                    // TODO Auto-generated method stub
+                    if (isValueX) {
+                        long t = (long) (1000 * value);
+                        return ZeitSklave.LongToTime(t);
+                    }
+                    return "" + value;
+                }
+            });
+            graphView.addSeries(gSeries); // data
+            if ((last - first) < 7200) {
+                graphView.setViewPort(first, last - first);
+            } else {
+                graphView.setViewPort(first, 7200);
+            }
             layout.addView(graphView);
-        } else {
-            layout.removeAllViews();
+
         }
     }
 
-    public List<Double> berechneSchmerzdurchschnittProTag() {
+
+
+    /*public List<Double> berechneSchmerzdurchschnittProTag() {
+
         List<Schmerzaenderung> sae = mdatasource.getActiveSchmerzaenderungen();
         HashMap<String, List<Integer>> calc = new HashMap<String, List<Integer>>();
         for (Schmerzaenderung s : sae) {
@@ -120,13 +164,26 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
                     return 1;
             }
         });
-        for (Date d : dates) {
+        //auffüllen
+        Date now = new Date();
+        int h = 0;
+        for(int i = 6; i >= 0 ; i--){
+          Date vgl = new Date(now.getTime() - h*1000*60*60*24);
+          if(!dates.get(i).equals(vgl)){
+              dates.add()
+          }
+            h++;
+        }
 
+        //transfering
+        ArrayList<Double> finalList = new ArrayList<Double>();
+        for (Date d : dates) {
+            finalList.add(calc2.get(d));
         }
 
 
         return finalList;
-    }
+    }*/
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

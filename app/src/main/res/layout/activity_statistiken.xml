@@ -16,7 +16,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/statsselect"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
     </LinearLayout>
 

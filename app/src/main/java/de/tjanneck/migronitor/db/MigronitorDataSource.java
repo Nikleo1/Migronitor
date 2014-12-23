@@ -9,7 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import de.tjanneck.migronitor.helpers.ZeitSklave;
 
 /**
  * Created by Programmieren on 24.11.2014.
@@ -29,6 +32,8 @@ public class MigronitorDataSource {
     // Database fields
     private SQLiteDatabase database;
 
+    private final SimpleDateFormat dateFormater1 = new SimpleDateFormat("dd.MM.yyyy");
+
     public MigronitorDataSource(Context context) {
         dbHelper = new MigronitorDbHelper(context);
     }
@@ -41,6 +46,8 @@ public class MigronitorDataSource {
         dbHelper.close();
     }
     //Schmerzaenderungen
+
+
 
     public void createSchmerzaenderung(Schmerzaenderung s) {
         ContentValues values = new ContentValues();
@@ -75,6 +82,24 @@ public class MigronitorDataSource {
 
         Cursor cursor = database.query(MigronitorDbHelper.TABLE_SCHMERZSTAERKE,
                 allColumnsSchmerzStaerke, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Schmerzaenderung s = cursorToSchmerzaenderung(cursor);
+            se.add(s);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return se;
+    }
+
+    public List<Schmerzaenderung> getSchmerzaenderungenDate(Date d) {
+        List<Schmerzaenderung> se = new ArrayList<Schmerzaenderung>();
+        String[] selectionargs = {dateFormater1.format(d) +"%"};
+
+        Cursor cursor = database.query(MigronitorDbHelper.TABLE_SCHMERZSTAERKE,
+                allColumnsSchmerzStaerke, MigronitorDbHelper.COLUMN_SCHMERZSTAERKE_DATE + " LIKE ?", selectionargs, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

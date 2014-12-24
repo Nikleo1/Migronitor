@@ -52,8 +52,8 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
         mdatasource.open();
 
         Spinner spinner = (Spinner) findViewById(R.id.statsselect);
-        //list.add("Durschnitt Tage");
-        //list.add("Zahlen");
+
+
         list.add("Heute");
         list.add("Gestern");
         list.add("Vorgestern");
@@ -64,7 +64,8 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
             list.add(dateFormater3.format(d));
         }
 
-
+        //list.add("Durschnitt Tage");
+        //list.add("Zahlen");
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
         spinner.setAdapter(adapter);

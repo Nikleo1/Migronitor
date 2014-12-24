@@ -38,6 +38,7 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
     final ArrayList<String> list = new ArrayList<String>();
     private final SimpleDateFormat dateFormater = new SimpleDateFormat("dd.MM.yyyy");
     private final SimpleDateFormat dateFormater1 = new SimpleDateFormat("HH:mm");
+    private final SimpleDateFormat dateFormater3 = new SimpleDateFormat("dd.MM");
     private MigronitorDataSource mdatasource;
     private double first;
     private double last;
@@ -56,6 +57,13 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
         list.add("Heute");
         list.add("Gestern");
         list.add("Vorgestern");
+        Date d = new Date();
+        d = new Date(d.getTime() - 3*1000*60*60*24);
+        for(int i = 0; i<4 ; i++){
+            d = new Date(d.getTime()  - 1000*60*60*24);
+            list.add(dateFormater3.format(d));
+        }
+
 
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
@@ -70,7 +78,7 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         LinearLayout layout = (LinearLayout) findViewById(R.id.ltest);
         layout.removeAllViews();
-        if (id == 0 || id == 1|| id == 2) {
+        if (id < 7) {
 
             Date d = new Date();
             d = new Date(d.getTime() - id * 1000 * 60 * 60 * 24);

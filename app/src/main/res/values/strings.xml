@@ -7,6 +7,6 @@
     <string name="title_activity_attacke_bearbeiten">AttackeBearbeiten</string>
     <string name="attacke_bearbeiten_datum">datum</string>
     <string name="title_activity_statistiken">Statistiken</string>
-
+    <string name="title_activity_info">Info</string>
 
 </resources>

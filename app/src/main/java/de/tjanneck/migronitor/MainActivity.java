@@ -130,6 +130,10 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, Statistiken.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_info) {
+            Intent intent = new Intent(this, Info.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

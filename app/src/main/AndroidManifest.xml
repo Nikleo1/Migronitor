@@ -41,7 +41,10 @@
             android:label="@string/title_activity_attacke_bearbeiten" />
         <activity
             android:name=".Statistiken"
-            android:label="@string/title_activity_statistiken"></activity>
+            android:label="@string/title_activity_statistiken" />
+        <activity
+            android:name=".Info"
+            android:label="@string/title_activity_info"></activity>
     </application>
 
 </manifest>

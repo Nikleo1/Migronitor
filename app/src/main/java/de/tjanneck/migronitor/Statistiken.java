@@ -2,11 +2,7 @@ package de.tjanneck.migronitor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,15 +15,11 @@ import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.tjanneck.migronitor.db.MigronitorDataSource;
 import de.tjanneck.migronitor.db.Schmerzaenderung;
@@ -87,8 +79,8 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
             List<Schmerzaenderung> sae = mdatasource.getSchmerzaenderungenDate(d);
             GraphViewData[] gd = new GraphViewData[sae.size()];
             if (!sae.isEmpty()) {
-                first = ZeitSklave.DateToGraph(sae.get(1).getDatum());
-                last = ZeitSklave.DateToGraph(sae.get(sae.size() - 1).getDatum());
+                first = ZeitSklave.DateToGraph(sae.get(0).getDatum());
+                last = ZeitSklave.DateToGraph(sae.get(sae.size() - 0).getDatum());
             }
             for (int i = 0; i < sae.size(); i++) {
                 gd[i] = new GraphViewData(ZeitSklave.DateToGraph(sae.get(i).getDatum()), sae.get(i).getStaerke());

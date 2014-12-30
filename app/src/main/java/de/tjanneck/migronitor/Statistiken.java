@@ -80,7 +80,7 @@ public class Statistiken extends Activity implements AdapterView.OnItemSelectedL
             GraphViewData[] gd = new GraphViewData[sae.size()];
             if (!sae.isEmpty()) {
                 first = ZeitSklave.DateToGraph(sae.get(0).getDatum());
-                last = ZeitSklave.DateToGraph(sae.get(sae.size() - 0).getDatum());
+                last = ZeitSklave.DateToGraph(sae.get(sae.size() - 1).getDatum());
             }
             for (int i = 0; i < sae.size(); i++) {
                 gd[i] = new GraphViewData(ZeitSklave.DateToGraph(sae.get(i).getDatum()), sae.get(i).getStaerke());
